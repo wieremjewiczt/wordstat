@@ -71,6 +71,6 @@ public class Main {
     }
 
     public static int wtf() {
-        return 7;
+        return 47;
     }
 }
