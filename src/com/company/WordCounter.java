@@ -1,16 +1,38 @@
 package com.company;
 
 import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class ThreadedWordCounter {
+public class WordCounter {
     private static List<HashMap<String, Integer>> listOfThreadResults = new ArrayList();
 
-    public HashMap<String, Integer> CountWords(String fileName) {
+    public HashMap<String,Integer> CountWords(String fileName) {
+        File file = new File(fileName);
+        if (file.exists()) {
+            System.out.println("There is 1 file.");
+            try {
+                HashMap<String, Integer> hashMap = new HashMap();
+                Files.lines( Paths.get(fileName)).forEach((s) -> analizujWiersz(s, hashMap));
+                return hashMap;
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+        else {
+            System.out.println("There are multiple files");
+            return countWordsWithThreads(fileName);
+        }
+    }
+
+    public HashMap<String, Integer> countWordsWithThreads(String fileName) {
         List<Thread> threads = new ArrayList();
-        String template = CreateNameTemplate(fileName);
+        String template = createNameTemplate(fileName);
 
         int counter = 0;
         File file = new File(String.format(template, counter));
@@ -44,20 +66,9 @@ public class ThreadedWordCounter {
         result.put(word, myCount);
     }
 
-    private String CreateNameTemplate(String fileName) {
-        String[] splitName = fileName.split("\\.");
-        String nameTemplate = "";
-        if (splitName.length == 2) {
-            nameTemplate = splitName[0] + "%d." + splitName[1];
-        }
-        else {
-            nameTemplate = splitName[0];
-            for (int i=1;i<splitName.length-1;i++)
-                nameTemplate = String.format("%s.%s", nameTemplate, splitName[i]);
-            nameTemplate = nameTemplate + "%d." + splitName[splitName.length-1];
-        }
-
-        return nameTemplate;
+    private String createNameTemplate(String fileName) {
+        int index = fileName.lastIndexOf(".");
+        return fileName.substring(0, index) + "%d" + fileName.substring(index);
     }
 
     public static void addResult(HashMap<String, Integer> hashMap) {

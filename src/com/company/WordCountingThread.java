@@ -17,12 +17,12 @@ class WordCountingThread extends Thread{
         HashMap<String, Integer> hashMap = new HashMap();
 
         try {
-            Files.lines( Paths.get(fileName)).forEach((s) -> ThreadedWordCounter.analizujWiersz(s, hashMap));
+            Files.lines( Paths.get(fileName)).forEach((s) -> WordCounter.analizujWiersz(s, hashMap));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        ThreadedWordCounter.addResult(hashMap);
+        WordCounter.addResult(hashMap);
         System.out.println("Thread working with file " +  fileName + " exiting.");
     }
 }
