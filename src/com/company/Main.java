@@ -18,9 +18,9 @@ public class Main {
             throw new Exception("Wrong number of arguments! There should be 2 arguments (fileName, numberOfAnswers), but there are " + args.length + " arguments.");
         }
 
-        fileName = args[0];
+        fileName = args[1];
         try {
-            numberOfAnswers = Integer.parseInt(args[1]);
+            numberOfAnswers = Integer.parseInt(args[0]);
         }
         catch (NumberFormatException ex) {
             ex.printStackTrace();
