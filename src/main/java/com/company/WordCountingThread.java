@@ -1,10 +1,7 @@
 package com.company;
 
-import java.io.IOException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.Scanner;
 
 class WordCountingThread extends Thread{
     private Thread t;
@@ -16,16 +13,8 @@ class WordCountingThread extends Thread{
 
     public void run() {
         HashMap<String, Integer> hashMap = new HashMap();
-
-        try {
-            URL url = new URL(fileName);
-            
-
-            Files.lines( Paths.get(fileName)).forEach((s) -> WordCounter.analizujWiersz(s, hashMap));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+        Scanner scanner = WordCounter.createScanner(fileName);
+        scanner.forEachRemaining((s) -> WordCounter.analizujWiersz(s, hashMap));
         WordCounter.addResult(hashMap);
         System.out.println("Thread working with file " +  fileName + " exiting.");
     }

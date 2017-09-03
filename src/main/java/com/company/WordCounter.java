@@ -1,28 +1,25 @@
 package com.company;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 
 public class WordCounter {
     private static List<HashMap<String, Integer>> listOfThreadResults = new ArrayList();
 
     public HashMap<String,Integer> countWords(String fileName) {
-        File file = new File(fileName);
-        if (file.exists()) {
+        if (doesFileExist(fileName)) {
             System.out.println("There is 1 file.");
-            try {
-                HashMap<String, Integer> hashMap = new HashMap();
-                Files.lines( Paths.get(fileName)).forEach((s) -> analizujWiersz(s, hashMap));
-                return hashMap;
-            } catch (IOException e) {
-                e.printStackTrace();
-                return null;
-            }
+            HashMap<String, Integer> hashMap = new HashMap();
+            Scanner scanner = createScanner(fileName);
+            scanner.forEachRemaining((s) -> analizujWiersz(s, hashMap));
+            return hashMap;
         }
         else {
             System.out.println("There are multiple files");
@@ -35,13 +32,11 @@ public class WordCounter {
         String template = createNameTemplate(fileName);
 
         int counter = 0;
-        File file = new File(String.format(template, counter));
-        while (file.exists()) {
+        while (doesFileExist(String.format(template, counter))) {
             Thread t = new WordCountingThread(String.format(template, counter));
             threads.add(t);
             t.start();
             counter++;
-            file = new File(String.format(template, counter));
         }
 
         for (int i = 0; i < threads.size(); i++ ) {
@@ -58,6 +53,47 @@ public class WordCounter {
         }
 
         return result;
+    }
+
+    public static Scanner createScanner(String fileName) {
+        if (fileName.startsWith("http")) {
+            try {
+                URL url = new URL(fileName);
+                return new Scanner(url.openStream());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            File file = new File(fileName);
+            try {
+                return new Scanner(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    private boolean doesFileExist(String fileName) {
+        if (fileName.startsWith("http")) {
+            try {
+                URL url = new URL(fileName);
+                url.openStream();
+                return true;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+        else {
+            File file = new File(fileName);
+            return file.exists();
+        }
     }
 
     private void addWord(String word, Integer count, HashMap<String, Integer> result) {

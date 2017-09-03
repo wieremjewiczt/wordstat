@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Main {
-    //test args: pan_tadeusz.txt 7
-    //pan_tadeuszX.txt 7
+    //test args
+    //7 pan_tadeusz.txt
+    //7 pan_tadeuszX.txt
     public static void main(String[] args) throws Exception {
         long startTime = System.currentTimeMillis();
         HashMap<String, Integer> hashMap;
