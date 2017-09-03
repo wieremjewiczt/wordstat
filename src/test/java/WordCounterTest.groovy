@@ -1,4 +1,4 @@
-package com.company.tests
+package com.company
 
 import com.company.WordCounter
 import org.testng.Assert
