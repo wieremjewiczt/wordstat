@@ -11,7 +11,7 @@ import java.util.List;
 public class WordCounter {
     private static List<HashMap<String, Integer>> listOfThreadResults = new ArrayList();
 
-    public HashMap<String,Integer> CountWords(String fileName) {
+    public HashMap<String,Integer> countWords(String fileName) {
         File file = new File(fileName);
         if (file.exists()) {
             System.out.println("There is 1 file.");
@@ -66,7 +66,7 @@ public class WordCounter {
         result.put(word, myCount);
     }
 
-    private String createNameTemplate(String fileName) {
+    public String createNameTemplate(String fileName) {
         int index = fileName.lastIndexOf(".");
         return fileName.substring(0, index) + "%d" + fileName.substring(index);
     }

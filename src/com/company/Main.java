@@ -27,7 +27,7 @@ public class Main {
             throw new Exception("Second argument should be a number!");
         }
 
-        hashMap = wordCounter.CountWords(fileName);
+        hashMap = wordCounter.countWords(fileName);
         if (hashMap != null) {
             displayAnswers(hashMap, numberOfAnswers);
             long endTime = System.currentTimeMillis();
