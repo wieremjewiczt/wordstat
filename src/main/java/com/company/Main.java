@@ -34,6 +34,9 @@ public class Main {
             long endTime = System.currentTimeMillis();
             System.out.println("Time taken: " + (endTime - startTime));
         }
+        else {
+            System.out.println("There was a problem with the program :(");
+        }
     }
 
     private static void displayAnswers(HashMap<String, Integer> hashMap, int numberOfAnswers) {
@@ -41,7 +44,8 @@ public class Main {
         lista.sort((a,b) -> b.getValue() - a.getValue());
 
         for (int i = 0; i<numberOfAnswers && i<lista.size(); i++) {
-            System.out.println(String.format("%d Word: %s was found %d times.", i+1, lista.get(i).getKey(), lista.get(i).getValue()));
+//            System.out.println(String.format("%d Word: %s was found %d times.", i+1, lista.get(i).getKey(), lista.get(i).getValue()));
+            System.out.println(String.format("%s %d", lista.get(i).getKey(), lista.get(i).getValue()));
         }
     }
 }

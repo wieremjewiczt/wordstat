@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 
 class WordCountingThread extends Thread{
-    private Thread t;
     private String fileName;
 
     WordCountingThread( String fileName) {

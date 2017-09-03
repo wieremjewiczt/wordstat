@@ -15,14 +15,14 @@ public class WordCounter {
 
     public HashMap<String,Integer> countWords(String fileName) {
         if (doesFileExist(fileName)) {
-            System.out.println("There is 1 file.");
+//            System.out.println("There is 1 file.");
             HashMap<String, Integer> hashMap = new HashMap();
             Scanner scanner = createScanner(fileName);
             scanner.forEachRemaining((s) -> analizujWiersz(s, hashMap));
             return hashMap;
         }
         else {
-            System.out.println("There are multiple files");
+//            System.out.println("There are multiple files");
             return countWordsWithThreads(fileName);
         }
     }
@@ -37,6 +37,10 @@ public class WordCounter {
             threads.add(t);
             t.start();
             counter++;
+        }
+
+        if (counter == 0) {
+            return null;
         }
 
         for (int i = 0; i < threads.size(); i++ ) {
@@ -103,8 +107,9 @@ public class WordCounter {
     }
 
     public String createNameTemplate(String fileName) {
-        int index = fileName.lastIndexOf(".");
-        return fileName.substring(0, index) + "%d" + fileName.substring(index);
+//        int index = fileName.lastIndexOf(".");
+//        return fileName.substring(0, index) + "%d" + fileName.substring(index);
+        return fileName + "%d";
     }
 
     public static void addResult(HashMap<String, Integer> hashMap) {
