@@ -1,0 +1,7 @@
+<suite name="TestAll">
+    <test name="testNGTestCases" >
+        <packages>
+            <package name="com.company" />
+        </packages>
+    </test>
+</suite>
